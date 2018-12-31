@@ -13,11 +13,13 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Do you need to change for consumer group offset in kafka?')
     parser.add_argument('--file', type=str, help='What is the file with the partitions written on?', required=True)
-    parser.add_argument('--topic', type=str, help='What topic?', required=True)
+    parser.add_argument('--topic', type=str, help='What is the topic?', required=True)
+    parser.add_argument('--group', type=str, help='What is the group?', required=True)
     args = parser.parse_args()
 
     file = args.file
     topic = args.topic
+    group = args.group
 
     # get each offset of partition
     partitions = {}
@@ -39,7 +41,7 @@ if __name__ == '__main__':
     # kafka consumer
     consumer = KafkaConsumer(
         bootstrap_servers='localhost:9092',
-        group_id=_group
+        group_id=group
     )
 
     for k in partitions.keys():
